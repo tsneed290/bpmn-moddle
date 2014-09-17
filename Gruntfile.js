@@ -36,6 +36,30 @@ module.exports = function(grunt) {
       }
     },
 
+    browserify: {
+      bower: {
+        files: {
+          '<%= config.dist %>/bpmn-moddle.js': [ '<%= config.sources %>/simple.js' ]
+        },
+        options: {
+          browserifyOptions: {
+            builtins: false
+          },
+          bundleOptions: {
+            standalone: 'BpmnModdle',
+            detectGlobals: false,
+            insertGlobalVars: [],
+            debug: false
+          },
+
+          transform: [ [
+            'exposify',
+            { global: true, expose: { 'lodash': '_' } }
+          ]]
+        }
+      }
+    },
+
     release: {
       options: {
         tagName: 'v<%= version %>',
